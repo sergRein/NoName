@@ -9,7 +9,7 @@ def parse_input(user_input: str) -> tuple[str, list[str]]:
     args = parts[1:] if len(parts) > 1 else []
     return cmd, args
 
-# Словник команд та їх функцій
+# Dictionary of commands and their functions
 commands = { 
     "hello": lambda book: "How can I help you?",
     "add": add_contact,
@@ -30,10 +30,19 @@ commands = {
     "show-contact": show_contact,
     "add-note": lambda: notes_manager.add_note(),
     "edit-note": lambda: notes_manager.edit_note(),
+    "delete-note": lambda: notes_manager.delete_note(),
+    "search-note": lambda: notes_manager.search_notes_by_keyword(),
+    "add-tag": lambda: notes_manager.add_tag(),
+    "search-note-by-tag": lambda: notes_manager.search_notes_by_tag(),
+    "encrypt-note": lambda: notes_manager.encrypt_note(),
+    "decrypt-note": lambda: notes_manager.decrypt_note(),
+    "import-notes": lambda: notes_manager.import_notes(),
+    "export-notes": lambda: notes_manager.export_notes(),
     "save-note": lambda: notes_manager.save_notes(),
+    "backup-notes": lambda: notes_manager.backup_notes(),
 }
 
-# autocompeter
+# autocompleter
 def completer(text, state):
     options = [cmd for cmd in commands.keys() if cmd.startswith(text)]
     return options[state] if state < len(options) else None
@@ -56,7 +65,11 @@ def main(book) -> None:
             break
 
         elif command in commands:
-            result = commands[command](book)
+            # Use notes_manager instance for notes-related commands
+            if command in ["add-note", "edit-note", "delete-note", "search-note", "add-tag", "search-note-by-tag", "encrypt-note", "decrypt-note", "import-notes", "export-notes", "save-note", "backup-notes"]:
+                result = commands[command]()
+            else:
+                result = commands[command](book)
             if result is not None:
                 print(result)
         else:
