@@ -7,20 +7,20 @@ init(autoreset=True)
 
 def show_menu():
     menu_data = [
-        [f"{Fore.GREEN}help or menu{Style.RESET_ALL}", f"{Fore.GREEN}Show available commands{Style.RESET_ALL}"],
-        [f"{Fore.GREEN}hello{Style.RESET_ALL}", f"{Fore.GREEN}Show hello message{Style.RESET_ALL}"],
-        [f"{Fore.GREEN}all{Style.RESET_ALL}", f"{Fore.GREEN}Show all phones in address book{Style.RESET_ALL}"],
-        [f"{Fore.GREEN}add{Style.RESET_ALL}", f"{Fore.GREEN}Add new record{Style.RESET_ALL}"],
-        [f"{Fore.GREEN}change{Style.RESET_ALL}", f"{Fore.GREEN}Change phone number{Style.RESET_ALL}"],
-        [f"{Fore.GREEN}phone{Style.RESET_ALL}", f"{Fore.GREEN}Show phone for user with name{Style.RESET_ALL}"],
-        [f"{Fore.GREEN}add-birthday{Style.RESET_ALL}", f"{Fore.GREEN}Add birthday for user{Style.RESET_ALL}"],
-        [f"{Fore.GREEN}show-birthday{Style.RESET_ALL}", f"{Fore.GREEN}Show birthday for user{Style.RESET_ALL}"],
-        [f"{Fore.GREEN}add-email{Style.RESET_ALL}", f"{Fore.GREEN}Add email for user{Style.RESET_ALL}"],
-        [f"{Fore.GREEN}add-address{Style.RESET_ALL}", f"{Fore.GREEN}Add or change user address{Style.RESET_ALL}"],
-        [f"{Fore.GREEN}remove-address{Style.RESET_ALL}", f"{Fore.GREEN}Remove user address{Style.RESET_ALL}"],
-        [f"{Fore.GREEN}birthdays{Style.RESET_ALL}", f"{Fore.GREEN}Show upcoming birthdays{Style.RESET_ALL}"],
-        [f"{Fore.GREEN}remove-contact{Style.RESET_ALL}", f"{Fore.GREEN}Remove contact with name{Style.RESET_ALL}"],
-        [f"{Fore.GREEN}close or exit{Style.RESET_ALL}", f"{Fore.GREEN}Exit from program{Style.RESET_ALL}"]
+        [f"{Fore.GREEN}help or menu{Style.RESET_ALL}", f"{Fore.GREEN}trans('show_available_commands'){Style.RESET_ALL}"],
+        [f"{Fore.GREEN}hello{Style.RESET_ALL}", f"{Fore.GREEN}trans('show_hello_message'){Style.RESET_ALL}"],
+        [f"{Fore.GREEN}all{Style.RESET_ALL}", f"{Fore.GREEN}trans('show_all_phones_in_address_book'){Style.RESET_ALL}"],
+        [f"{Fore.GREEN}add{Style.RESET_ALL}", f"{Fore.GREEN}trans('add_new_record'){Style.RESET_ALL}"],
+        [f"{Fore.GREEN}change{Style.RESET_ALL}", f"{Fore.GREEN}trans('change_phone_number'){Style.RESET_ALL}"],
+        [f"{Fore.GREEN}phone{Style.RESET_ALL}", f"{Fore.GREEN}trans('show_phone_for_user_with_name'){Style.RESET_ALL}"],
+        [f"{Fore.GREEN}add-birthday{Style.RESET_ALL}", f"{Fore.GREEN}trans('add_birthday_for_user'){Style.RESET_ALL}"],
+        [f"{Fore.GREEN}show-birthday{Style.RESET_ALL}", f"{Fore.GREEN}trans('show_birthday_for_user'){Style.RESET_ALL}"],
+        [f"{Fore.GREEN}add-email{Style.RESET_ALL}", f"{Fore.GREEN}trans('add_email_for_user'){Style.RESET_ALL}"],
+        [f"{Fore.GREEN}add-address{Style.RESET_ALL}", f"{Fore.GREEN}trans('add_or_change_user_address'){Style.RESET_ALL}"],
+        [f"{Fore.GREEN}remove-address{Style.RESET_ALL}", f"{Fore.GREEN}trans('remove_user_address'){Style.RESET_ALL}"],
+        [f"{Fore.GREEN}birthdays{Style.RESET_ALL}", f"{Fore.GREEN}trans('show_upcoming_birthdays'){Style.RESET_ALL}"],
+        [f"{Fore.GREEN}remove-contact{Style.RESET_ALL}", f"{Fore.GREEN}trans('remove_contact_with_name'){Style.RESET_ALL}"],
+        [f"{Fore.GREEN}close or exit{Style.RESET_ALL}", f"{Fore.GREEN}trans('exit_from_program'){Style.RESET_ALL}"]
     ]
     
     table = tabulate(menu_data, headers=[f"{Fore.GREEN}Command{Style.RESET_ALL}", f"{Fore.GREEN}Description{Style.RESET_ALL}"], tablefmt="grid")
