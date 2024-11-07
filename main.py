@@ -1,6 +1,7 @@
 import readline
 from app.functions import *
 from app.visualiser import show_menu, show_all_contacts, green_input, show_contact
+from app.classes.function_notes import NotesManager
 
 def parse_input(user_input: str) -> tuple[str, list[str]]:
     parts = user_input.split()  # split all input args
@@ -26,7 +27,10 @@ commands = {
     "add-address": add_address,
     "remove-address": remove_address,
     "remove-contact": remove_contact,
-    "show-contact": show_contact
+    "show-contact": show_contact,
+    "add-note": lambda: notes_manager.add_note(),
+    "edit-note": lambda: notes_manager.edit_note(),
+    "save-note": lambda: notes_manager.save_notes(),
 }
 
 # autocompeter
@@ -39,6 +43,7 @@ readline.parse_and_bind("tab: complete")
 readline.set_completer(completer)
 
 def main(book) -> None:
+    notes_manager = NotesManager()
     print("Welcome to the assistant bot!")
     show_menu()
     
