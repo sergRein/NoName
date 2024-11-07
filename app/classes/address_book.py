@@ -35,28 +35,11 @@ class AddressBook(UserDict):
             raise KeyError(f"Record for name '{name}' not found")
         del self.data[name]
 
-    def show_upcoming_birthdays(self, period = 'upcoming') -> str:
+    def show_upcoming_birthdays(self, period = 7) -> str:
         today = datetime.today().date()
         congratulation_dict = defaultdict(list)
-        #generate perod for dats range
-        if period == 'next-month':
-            if today.month == 12:
-                next_month = 1
-                next_year = today.year + 1
-            else:
-                next_month = today.month + 1
-                next_year = today.year
-
-            date_start = datetime(next_year, next_month, 1).date()
-            days_in_next_month = calendar.monthrange(next_year, next_month)[1]
-            date_end = datetime(next_year, next_month, days_in_next_month).date()
-
-        elif period == 'next-week':
-            date_start = today + timedelta(days=(7 - today.weekday()))
-            date_end = date_start + timedelta(days=6)
-        else:
-            date_start = today 
-            date_end = date_start + timedelta(days=6)
+        date_start = today 
+        date_end = date_start + timedelta(days=period-1)
     
         for username, user in self.data.items():
             if user.birthday:

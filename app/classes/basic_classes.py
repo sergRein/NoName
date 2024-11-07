@@ -1,7 +1,7 @@
 """Module providing basic classes declaration for address book module."""
 
 from datetime import datetime
-
+import re
 
 class Field:
     """Basic Class representing field"""
@@ -51,12 +51,26 @@ class Birthday(Field):
     
 
 class Email():
-    pass
+    """Class representing a email field"""
+    def __init__(self, email: str):
+        super().__init__(self.__is_valid_email(email))
+
+    def __is_valid_email(self, email: str) -> str:
+        pattern = r'^[\w\.-]+@[\w\.-]+\.\w+$'
+        if not re.match(pattern, email):
+            raise ValueError("Wrong email format.")
+        return email
 
 
 class Address():
-    """Provide address with its name (Ex. Home -> address 1, Work -> address 2)"""
-    pass 
+    """Class representing an address field with a name and address details."""
+    
+    def __init__(self, address: str, label: str = "дім"):
+        self.label = label or "Дім"
+        self.address = address
+
+    def __str__(self):
+        return f"{self.label}: {self.address}"
 
 
 class Note():

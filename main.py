@@ -1,6 +1,6 @@
 import readline
-from app.functions import load_data, save_data, add_contact, change_contact, show_phone, add_birthday, show_birthday, upcoming_birthdays
-from app.visualiser import show_menu
+from app.functions import *
+from app.visualiser import show_menu, show_all_contacts, green_input, show_contact
 
 def parse_input(user_input: str) -> tuple[str, list[str]]:
     parts = user_input.split()  # split all input args
@@ -10,18 +10,23 @@ def parse_input(user_input: str) -> tuple[str, list[str]]:
 
 # Словник команд та їх функцій
 commands = { 
-    "hello": lambda args, book: "How can I help you?",
+    "hello": lambda book: "How can I help you?",
     "add": add_contact,
     "change": change_contact,
     "phone": show_phone,
-    "all": lambda args, book: str(book),
+    "all": show_all_contacts,
     "add-birthday": add_birthday,
     "show-birthday": show_birthday,
     "birthdays": upcoming_birthdays,
-    "close": lambda args, book: "Good bye!",
-    "exit": lambda args, book: "Good bye!",
-    "help": lambda args, book: show_menu(),
-    "menu": lambda args, book: show_menu()
+    "close": lambda book: "Good bye!",
+    "exit": lambda book: "Good bye!",
+    "help": lambda book: show_menu(),
+    "menu": lambda book: show_menu(),
+    "add-email": add_email,
+    "add-address": add_address,
+    "remove-address": remove_address,
+    "remove-contact": remove_contact,
+    "show-contact": show_contact
 }
 
 # autocompeter
@@ -38,7 +43,7 @@ def main(book) -> None:
     show_menu()
     
     while True:
-        user_input = input("Enter a command: ")
+        user_input = green_input("Enter a command: ")
         command, args = parse_input(user_input)
 
         if command in ["close", "exit"]:
@@ -46,7 +51,7 @@ def main(book) -> None:
             break
 
         elif command in commands:
-            result = commands[command](args, book)
+            result = commands[command](book)
             if result is not None:
                 print(result)
         else:

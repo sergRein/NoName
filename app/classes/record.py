@@ -8,6 +8,8 @@ class Record:
         self.name = Name(name)
         self.phones = []
         self.birthday = None
+        self.email = None
+        self.addresses = {}
 
     def show_phones(self) -> str:
         """Show user phones"""
@@ -41,20 +43,33 @@ class Record:
         self.birthday = Birthday(birthday)
 
     def add_email(self, email: str) -> None:
-        pass
+        """Add email to record"""
+        self.email = Email(email)
 
-    def add_address(self, address_name: str, address: str) -> None:
-        pass
+    def add_address(self, label: str, address: str) -> None:
+        """Add an address to the record."""
+        self.addresses[label] = Address(address, label)
 
-    def remove_address(self, address_name: str) -> None:
-        pass
+    def remove_address(self, label: str) -> None:
+        """Remove an address from the record by its label."""
+        if label in self.addresses:
+            del self.addresses[label]
+        else:
+            print(f"No address found with label '{label}'")
 
-    def edit_address(self, address_name: str, address: str) -> None:
-        pass
+    def show_addresses(self) -> str:
+        """Return a string representation of all addresses."""
+        if not self.addresses:
+            return "No addresses"
+        return "\n".join(str(address) for address in self.addresses.values())
 
     def __str__(self):
         to_return = f"Контакт: {self.name.value}, телефони: {'; '.join(p.value for p in self.phones)}"
         if self.birthday:
             to_return += f", День народження: {self.birthday}"
+        if self.email:
+            to_return += f", Email: {self.email}"
+        if self.addresses:
+            to_return += f", Адреси: {self.show_addresses()}"
         return to_return
     
