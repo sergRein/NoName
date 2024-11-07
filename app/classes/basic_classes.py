@@ -23,58 +23,53 @@ class Phone(Field):
     def __init__(self, number: str):
         super().__init__(self.__is_valid_number(number))
 
-    def __is_valid_number(self, number: str) -> str:
-        if len(number) != 10 or not number.isdigit():
-            raise ValueError("Wrong phone number format. Must be 10 digits")
-        return number
+    @staticmethod
+    def __is_valid_number(number: str) -> str:
+        pattern = r"^\+?\d{10,15}$"
+        if re.match(pattern, number):
+            return number
+        raise ValueError(f"Invalid phone number: {number}. Phone number must include the country code and be between 10 and 15 digits.")
 
-    def update_number(self, new_number: str) -> None:
-        """Update phone number if correct"""
-        self.value = self.__is_valid_number(new_number)
+
+class Email(Field):
+    """Class representing an email field"""
+
+    def __init__(self, email: str):
+        super().__init__(self.__is_valid_email(email))
+
+    @staticmethod
+    def __is_valid_email(email: str) -> str:
+        pattern = r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
+        if re.match(pattern, email):
+            return email
+        raise ValueError(f"Invalid email address: {email}. Please provide a valid email format, e.g., example@domain.com.")
 
 
 class Birthday(Field):
     """Class representing a birthday field"""
 
-    def __init__(self, date: str):
-        super().__init__(self.__is_valid_birthday(date))
+    def __init__(self, birthday: str):
+        super().__init__(self.__is_valid_birthday(birthday))
 
-    def __is_valid_birthday(self, birthday: str) -> datetime.date:
-        """Validate and return a birthday date."""
+    @staticmethod
+    def __is_valid_birthday(birthday: str) -> str:
         try:
-            return datetime.strptime(birthday, "%d.%m.%Y").date()
-        except ValueError as e:
-            raise ValueError("Invalid date format for birthday. Use DD.MM.YYYY") from e
-
-    def __str__(self):
-        return f"{self.value.strftime('%d.%m.%Y')}"
-    
-
-class Email():
-    """Class representing a email field"""
-    def __init__(self, email: str):
-        super().__init__(self.__is_valid_email(email))
-
-    def __is_valid_email(self, email: str) -> str:
-        pattern = r'^[\w\.-]+@[\w\.-]+\.\w+$'
-        if not re.match(pattern, email):
-            raise ValueError("Wrong email format.")
-        return email
+            date = datetime.strptime(birthday, "%Y-%m-%d")
+            if date > datetime.now():
+                raise ValueError(f"Birthday cannot be in the future: {birthday}")
+            return birthday
+        except ValueError:
+            raise ValueError(f"Invalid birthday format: {birthday}. Expected format: YYYY-MM-DD")
 
 
-class Address():
-    """Class representing an address field with a name and address details."""
-    
-    def __init__(self, address: str, label: str = "дім"):
-        self.label = label or "Дім"
-        self.address = address
+class Address(Field):
+    """Class representing an address field"""
 
-    def __str__(self):
-        return f"{self.label}: {self.address}"
+    def __init__(self, address: str):
+        super().__init__(self.__is_valid_address(address))
 
-
-class Note():
-    pass
-
-class NoteTag():
-    pass
+    @staticmethod
+    def __is_valid_address(address: str) -> str:
+        if len(address) > 5:
+            return address
+        raise ValueError(f"Invalid address: {address}. Address must be longer than 5 characters.")
