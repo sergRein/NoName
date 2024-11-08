@@ -7,8 +7,10 @@ from app.visualiser import show_contact_table, error_out, show_search_results_ta
 
 
 def input_error(func):
+"""input_error function."""
     @wraps(func)
     def inner(*args, **kwargs):
+"""inner function."""
         try:
             return func(*args, **kwargs)
         except KeyError: 
@@ -27,6 +29,7 @@ def get_input(prompt: str, required = True) -> str:
     return value
 
 def get_contact_from_book(name, book: AddressBook) -> Record:
+"""get_contact_from_book function."""
     record = book.find(name)
     if not record:
         raise KeyError
@@ -35,6 +38,7 @@ def get_contact_from_book(name, book: AddressBook) -> Record:
 
 @input_error
 def add_contact(book: AddressBook) -> str:
+"""add_contact function."""
     name = get_input("Enter name for contact")
     record = get_contact_from_book(name, book)
     if record:
@@ -96,6 +100,7 @@ def add_contact(book: AddressBook) -> str:
 
 @input_error
 def edit_contact(book: AddressBook) -> str:
+"""edit_contact function."""
     name = get_input("Enter name of contact")
     record = get_contact_from_book(name, book)
     
@@ -148,6 +153,7 @@ def edit_contact(book: AddressBook) -> str:
 
 
 def modify_phone(record, action):
+"""modify_phone function."""
     if action == "add":
         new_phone = get_input("Enter new phone number: ")
         if record.find_phone(new_phone):
@@ -178,6 +184,7 @@ def modify_phone(record, action):
 
 
 def modify_email(record, action):
+"""modify_email function."""
     if action == "add":
         if record.email:
             print(f"The email '{record.email.value}' already exists.")
@@ -203,6 +210,7 @@ def modify_email(record, action):
 
 
 def modify_birthday(record, action):
+"""modify_birthday function."""
     if action == "add":
         if record.birthday:
             print(f"The birthday '{record.birthday.value.strftime('%d.%m.%Y')}' already exists.")
@@ -228,6 +236,7 @@ def modify_birthday(record, action):
 
 
 def modify_address(record, action):
+"""modify_address function."""
     if action == "add":
         label = get_input("Enter address label (e.g., 'Home', 'Work')")
         if label in record.addresses:
@@ -257,34 +266,40 @@ def modify_address(record, action):
   
 @input_error
 def upcoming_birthdays(book: AddressBook) -> str:
+"""upcoming_birthdays function."""
     period = int(get_input("Enter period in days  to show birthdays"))
     return book.show_upcoming_birthdays(period)
 
 
 @input_error
 def remove_contact(book: AddressBook) -> str:
+"""remove_contact function."""
     name = get_input("Enter name of contact")
     book.delete(name)
     return "Contact removed"
 
 @input_error
 def show_contact(book: AddressBook) -> str:
+"""show_contact function."""
     name = get_input("Enter name of contact")
     record = get_contact_from_book(name, book)
     return show_contact_table(record) 
 
 @input_error
 def find_contact(address_book: AddressBook) -> None:
+"""find_contact function."""
     query = input("Enter search query: ")
     results = address_book.find_by_query(query)
     print(show_search_results_table(results, query))
 
 
 def save_data(book, filename="addressbook.pkl"):
+"""save_data function."""
     with open(filename, "wb") as f:
         pickle.dump(book, f)
 
 def load_data(filename="addressbook.pkl"):
+"""load_data function."""
     try:
         with open(filename, "rb") as f:
             data = pickle.load(f)
