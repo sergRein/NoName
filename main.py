@@ -4,6 +4,7 @@ from app.visualiser import show_menu, show_all_contacts, green_input, show_all_n
 from app.function_notes import NotesManager
 
 def parse_input(user_input: str) -> tuple[str, list[str]]:
+"""parse_input function."""
     parts = user_input.split()  # split all input args
     cmd = parts[0].strip().lower() if parts else ""
     #args = parts[1:] if len(parts) > 1 else []
@@ -43,6 +44,7 @@ commands_note = {
 
 # autocompleter
 def completer(text, state):
+"""completer function."""
     options = [cmd for cmd in (commands_book | commands_note).keys() if cmd.startswith(text)]
     return options[state] if state < len(options) else None
 
@@ -51,6 +53,7 @@ readline.parse_and_bind("tab: complete")
 readline.set_completer(completer)
 
 def main(book) -> None:
+"""main function."""
     print("Welcome to the assistant bot!")
     show_menu()
     
