@@ -6,6 +6,7 @@ from app.classes.record import Record
 init(autoreset=True)
 
 def show_menu():
+"""show_menu function."""
     menu_data = [
         [f"{Fore.GREEN}help or menu{Style.RESET_ALL}", f"{Fore.GREEN}Show available commands{Style.RESET_ALL}"],
         [f"{Fore.GREEN}hello{Style.RESET_ALL}", f"{Fore.GREEN}Show hello message{Style.RESET_ALL}"],
@@ -45,6 +46,7 @@ def format_record_for_display(record, query=None) -> dict:
     """Форматує запис для виведення у таблиці та виділяє пошуковий запит жовтим кольором, якщо задано."""
     
     def highlight(text):
+"""highlight function."""
         return f"{Fore.YELLOW}{text}{Style.RESET_ALL}"
 
     name = record.name.value
