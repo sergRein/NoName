@@ -77,8 +77,9 @@ class NotesManager:
         except Exception as e:
             return f"Failed to decrypt note '{title}': {str(e)}"
 
-    def import_notes(self):
-        file_path = input("Enter file path to import notes from (JSON/CSV/TXT): ")
+    def import_notes(self, file_path = None):
+        if not file_path:
+            file_path = input("Enter file path to import notes from (JSON/CSV/TXT): ")
         if not os.path.exists(file_path):
             return "File does not exist."
         try:
@@ -91,8 +92,9 @@ class NotesManager:
         except Exception as e:
             return f"Failed to import notes: {str(e)}"
 
-    def export_notes(self):
-        file_path = input("Enter file path to export notes to (JSON/CSV/TXT): ")
+    def export_notes(self, file_path = None):
+        if not file_path:
+            file_path = input("Enter file path to export notes to (JSON/CSV/TXT): ")
         try:
             if file_path.endswith(".json"):
                 with open(file_path, "w") as file:
@@ -118,3 +120,4 @@ class NotesManager:
             return "Backup created successfully."
         except Exception as e:
             return f"Error creating backup: {str(e)}"
+        

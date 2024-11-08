@@ -3,7 +3,7 @@
 from app.classes.basic_classes import Name, Phone, Birthday, Email, Address
 
 class Record:
-    """Record Class responding for phone, birthday, email and address"""
+    """Record Class responsible for phone, birthday, email, and address management."""
     def __init__(self, name: str):
         self.name = Name(name)
         self.phones = []
@@ -13,7 +13,7 @@ class Record:
 
     def show_phones(self) -> str:
         """Show user phones"""
-        return f"{self.name} телефони: {'; '.join(p.value for p in self.phones)}"
+        return f"{self.name.value} телефони: {'; '.join(p.value for p in self.phones)}"
 
     def add_phone(self, phone: str) -> None:
         """Add phone to record"""
@@ -28,10 +28,10 @@ class Record:
         phone = self.find_phone(old_phone)
         if phone:
             phone.update_number(new_phone)
-            return
-        raise ValueError("Не існує телефона який ви бажаєте змінити")
+        else:
+            raise ValueError("Не існує телефона, який ви бажаєте змінити")
 
-    def find_phone(self, phone: str) -> str:
+    def find_phone(self, phone: str) -> Phone:
         """Find phone in record"""
         for p in self.phones:
             if p.value == phone:
@@ -48,7 +48,14 @@ class Record:
 
     def add_address(self, label: str, address: str) -> None:
         """Add an address to the record."""
-        self.addresses[label] = Address(address, label)
+        self.addresses[label] = Address(label, address)
+
+    def edit_address(self, label: str, new_address: str) -> None:
+        """Edit an existing address."""
+        if label in self.addresses:
+            self.addresses[label].address = new_address
+        else:
+            raise ValueError(f"No address found with label '{label}'")
 
     def remove_address(self, label: str) -> None:
         """Remove an address from the record by its label."""
@@ -61,7 +68,7 @@ class Record:
         """Return a string representation of all addresses."""
         if not self.addresses:
             return "No addresses"
-        return "\n".join(str(address) for address in self.addresses.values())
+        return "\n".join(f"{label}: {address.address}" for label, address in self.addresses.items())
 
     def __str__(self):
         to_return = f"Контакт: {self.name.value}, телефони: {'; '.join(p.value for p in self.phones)}"
@@ -72,4 +79,3 @@ class Record:
         if self.addresses:
             to_return += f", Адреси: {self.show_addresses()}"
         return to_return
-    

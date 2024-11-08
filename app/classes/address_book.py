@@ -57,3 +57,31 @@ class AddressBook(UserDict):
         
         output = "No birthdays for this period" if output == '' else output
         return output
+    
+    def find_by_query(self, query: str) -> str:
+        """Search query data in any field"""
+        query = query.lower()
+        results = []
+
+        for record in self.data.values():
+            if query in record.name.value.lower():
+                results.append(record)
+                continue
+
+            if record.email and query in record.email.value.lower():
+                results.append(record)
+                continue
+
+            if any(query in phone.value for phone in record.phones):
+                results.append(record)
+                continue
+
+            if any(query in address.address.lower() for address in record.addresses.values()):
+                results.append(record)
+                continue
+
+            if record.birthday and query in record.birthday.__str__().lower():
+                results.append(record)
+                continue
+
+        return results
