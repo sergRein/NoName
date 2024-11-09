@@ -5,52 +5,72 @@ from app.classes.record import Record
 
 init(autoreset=True)
 
-def show_menu():
-"""show_menu function."""
+def show_menu_notes():
+    """show help notes data function"""
     menu_data = [
-        [f"{Fore.GREEN}help or menu{Style.RESET_ALL}", f"{Fore.GREEN}Show available commands{Style.RESET_ALL}"],
-        [f"{Fore.GREEN}hello{Style.RESET_ALL}", f"{Fore.GREEN}Show hello message{Style.RESET_ALL}"],
-        [f"{Fore.GREEN}all{Style.RESET_ALL}", f"{Fore.GREEN}Show all phones in address book{Style.RESET_ALL}"],
-        [f"{Fore.GREEN}add{Style.RESET_ALL}", f"{Fore.GREEN}Add new record{Style.RESET_ALL}"],
-        [f"{Fore.GREEN}change{Style.RESET_ALL}", f"{Fore.GREEN}Change phone number{Style.RESET_ALL}"],
-        [f"{Fore.GREEN}phone{Style.RESET_ALL}", f"{Fore.GREEN}Show phone for user with name{Style.RESET_ALL}"],
-        [f"{Fore.GREEN}add-birthday{Style.RESET_ALL}", f"{Fore.GREEN}Add birthday for user{Style.RESET_ALL}"],
-        [f"{Fore.GREEN}show-birthday{Style.RESET_ALL}", f"{Fore.GREEN}Show birthday for user{Style.RESET_ALL}"],
-        [f"{Fore.GREEN}add-email{Style.RESET_ALL}", f"{Fore.GREEN}Add email for user{Style.RESET_ALL}"],
-        [f"{Fore.GREEN}add-address{Style.RESET_ALL}", f"{Fore.GREEN}Add or change user address{Style.RESET_ALL}"],
-        [f"{Fore.GREEN}remove-address{Style.RESET_ALL}", f"{Fore.GREEN}Remove user address{Style.RESET_ALL}"],
-        [f"{Fore.GREEN}birthdays{Style.RESET_ALL}", f"{Fore.GREEN}Show upcoming birthdays{Style.RESET_ALL}"],
-        [f"{Fore.GREEN}remove-contact{Style.RESET_ALL}", f"{Fore.GREEN}Remove contact with name{Style.RESET_ALL}"],
-        [f"{Fore.GREEN}close or exit{Style.RESET_ALL}", f"{Fore.GREEN}Exit from program{Style.RESET_ALL}"]
+        ['note-add', 'Add note'],
+        ['note-edit', 'Edit note'],
+        ['note-delete', 'Delete note'],
+        ['note-search', 'Search note'],
+        ['note-add-tag', 'Add tag to note'],
+        ['note-search-by-tag', 'Search note by tag'],
+        ['note-encrypt', 'Encrypt note'],
+        ['note-decrypt', 'Decrypt note'],
+        ['notes-import', 'Import notes from file'],
+        ['notes-export', 'Export notes to file'],
+        ['note-save', 'Save note'],
+        ['notes-backup', 'Backup notes'],
+        ['notes-all', 'Show all notes']
     ]
-    
-    table = tabulate(menu_data, headers=[f"{Fore.GREEN}Command{Style.RESET_ALL}", f"{Fore.GREEN}Description{Style.RESET_ALL}"], tablefmt="grid")
+    menu_data = [[green_string(item) for item in row] for row in menu_data]
+    table = tabulate(menu_data, headers=[f"{green_string('Command')}", f"{green_string('Description')}"], tablefmt="grid")
+    print(Style.BRIGHT + table)
+
+def show_menu():
+    """show help data function."""
+    menu_data = [
+        ['help or menu', 'Show available commands'],
+        ['notes-help or notes-menu', 'Show available commands for notes'],
+        ['hello', 'Show hello message'],
+        ['all', 'Show all phones in address book'],
+        ['add', 'Add new record'],
+        ['edit', 'Change phone number'],
+        ['birthdays', 'Show upcoming birthdays'],
+        ['remove-contact', 'Remove contact with name'],
+        ['show-contact', 'Show contact by name'],
+        ['find', 'Find contacts containing search query'],
+        ['close or exit', 'Exit from program']
+    ]
+    menu_data = [[green_string(item) for item in row] for row in menu_data]
+    table = tabulate(menu_data, headers=[f"{green_string('Command')}", f"{green_string('Description')}"], tablefmt="grid")
     print(Style.BRIGHT + table)
 
 
-
+def green_string(str: str) -> str:
+    """return string in green color"""
+    return f"{Fore.GREEN}{str}{Style.RESET_ALL}"
 
 def error_out(error: str) -> str:
-    """Виводить текст помилки червоним кольором."""
+    """return red string, used to output errors"""
     return f"{Fore.RED}{error}{Style.RESET_ALL}"
 
 def green_input(prompt: str) -> str:
-    """Виводить текст запиту зеленим кольором і повертає введене користувачем значення."""
+    """Colorized input to green color"""
     return input(f"{Fore.GREEN}{prompt}{Style.RESET_ALL}")
 
 def blue_input(prompt: str) -> str:
-    """Виводить текст запиту зеленим кольором і повертає введене користувачем значення."""
+    """Colorized input to blue color"""
     return input(f"{Fore.BLUE}{prompt}{Style.RESET_ALL}")
 
 def format_record_for_display(record, query=None) -> dict:
-    """Форматує запис для виведення у таблиці та виділяє пошуковий запит жовтим кольором, якщо задано."""
+    """Formating record into table and colorize search query in yellow if serach query presents"""
     
-    def highlight(text):
-"""highlight function."""
+    def highlight(text: str) -> str:
+        """highlight in yellow function."""
         return f"{Fore.YELLOW}{text}{Style.RESET_ALL}"
 
     name = record.name.value
-    phones = "; ".join(phone.value for phone in record.phones)
+    phones = "\n".join(phone.value for phone in record.phones)
     email = record.email.value if record.email else "Немає"
     addresses = "\n".join(f"{address.label}: {address.address}" for address in record.addresses.values())
     birthday = record.birthday.value.strftime('%d.%m.%Y') if record.birthday else "Немає"
@@ -58,8 +78,8 @@ def format_record_for_display(record, query=None) -> dict:
     if query:
         query_lower = query.lower()
         name = name.replace(query, highlight(query)) if query_lower in name.lower() else name
-        phones = "; ".join(phone.replace(query, highlight(query)) if query_lower in phone.lower() else phone 
-                           for phone in phones.split("; "))
+        phones = "\n".join(phone.replace(query, highlight(query)) if query_lower in phone.lower() else phone 
+                           for phone in phones.split("\n"))
         email = email.replace(query, highlight(query)) if query_lower in email.lower() else email
         addresses = addresses.replace(query, highlight(query)) if query_lower in addresses.lower() else addresses
         birthday = birthday.replace(query, highlight(query)) if query_lower in birthday.lower() else birthday
@@ -74,7 +94,7 @@ def format_record_for_display(record, query=None) -> dict:
 
 
 def show_all_contacts(book: AddressBook) -> str:
-    """Виводить всю інформацію по адресній книзі у вигляді таблиці із зеленим кольором."""
+    """show all records in address book as table """
     if not book.data:
         return f"{Fore.GREEN}Адресна книга порожня.{Style.RESET_ALL}"
     
@@ -85,7 +105,7 @@ def show_all_contacts(book: AddressBook) -> str:
 
 
 def show_contact_table(record: Record) -> str:
-    """Виводить всю інформацію по запису в книзі у вигляді таблиці із зеленим кольором."""
+    """Show one record as table"""
     
     table = [format_record_for_display(record)]
     table_str = tabulate(table, headers="keys", tablefmt="grid", stralign="center")
@@ -94,7 +114,7 @@ def show_contact_table(record: Record) -> str:
 
 
 def show_all_notes_table(notes_manager):
-    """Відображає всі нотатки у вигляді таблиці."""
+    """Show all notes as table"""
     if not notes_manager.notes:
         return f"{Fore.GREEN}Нотаток немає.{Style.RESET_ALL}"
     
@@ -108,7 +128,7 @@ def show_all_notes_table(notes_manager):
 
 
 def show_search_results_table(results, query=None):
-    """Відображає результати пошуку у вигляді таблиці, виділяючи пошуковий запит жовтим кольором."""
+    """Show records after search"""
     if not results:
         return f"{Fore.GREEN}Нічого не знайдено за запитом.{Style.RESET_ALL}"
     

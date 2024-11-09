@@ -7,10 +7,10 @@ from app.visualiser import show_contact_table, error_out, show_search_results_ta
 
 
 def input_error(func):
-"""input_error function."""
+    """Function to wrap user input handle errors"""
     @wraps(func)
     def inner(*args, **kwargs):
-"""inner function."""
+        """inner function."""
         try:
             return func(*args, **kwargs)
         except KeyError: 
@@ -22,14 +22,14 @@ def input_error(func):
     return inner
 
 def get_input(prompt: str, required = True) -> str:
-    """Отримує ввід користувача для заданого запиту."""
+    """Get user input for selected request"""
     value = blue_input(f"{prompt}: ").strip()
     if value == '' and required:
         print(f"{error_out('Please input something')}")
     return value
 
 def get_contact_from_book(name, book: AddressBook) -> Record:
-"""get_contact_from_book function."""
+    """Function to find contact by name."""
     record = book.find(name)
     if not record:
         raise KeyError
@@ -38,12 +38,13 @@ def get_contact_from_book(name, book: AddressBook) -> Record:
 
 @input_error
 def add_contact(book: AddressBook) -> str:
-"""add_contact function."""
+    """Process adding contact functionality (saving info step by step)"""
     name = get_input("Enter name for contact")
-    record = get_contact_from_book(name, book)
+    record = book.find(name)
     if record:
         raise ValueError('Contat exists, you can edit it with edit command')
-    # Перевірка та додавання телефону
+
+    # Ask for phone
     phone_added = False
     while not phone_added:
         phone = get_input("Enter phone for contact")
@@ -58,6 +59,7 @@ def add_contact(book: AddressBook) -> str:
         except ValueError as e:
             print(f"Error: {e}")
     
+    #ask for email
     email_added = False
     while not email_added:
         email = get_input("Enter email for contact (press Enter to skip)", False)
@@ -70,7 +72,7 @@ def add_contact(book: AddressBook) -> str:
             except ValueError as e:
                 print(f"Error: {e}")
 
-    # Додавання дня народження з можливістю пропустити крок
+    #ask for birthday
     birthday_added = False
     while not birthday_added:
         birthday = get_input("Enter birthday for contact (press Enter to skip)", False)
@@ -83,7 +85,7 @@ def add_contact(book: AddressBook) -> str:
             except ValueError as e:
                 print(f"Error: {e}")
 
-    # Додавання адрес з можливістю закінчити цикл натисканням Enter на
+    #ask for email
     addresses_finished = False
     while not addresses_finished:
         address_label = get_input("Enter address label (press Enter to finish adding addresses)", False)
@@ -99,22 +101,21 @@ def add_contact(book: AddressBook) -> str:
 
 
 @input_error
-def edit_contact(book: AddressBook) -> str:
-"""edit_contact function."""
+def edit_contact(book: AddressBook, exit_edit_mode) -> str:
+    """Contact edit functionality"""
     name = get_input("Enter name of contact")
     record = get_contact_from_book(name, book)
     
-    # Відображення поточного контакту
     print("Current contact information:")
     print(show_contact_table(record))
 
     print("\nAvailable options for updating contact:")
-    print("Use commands in the format 'add field', 'change field', or 'delete field'.")
+    print("Use commands in the format 'add-field', 'change-field', or 'delete-field'.")
     print("Fields can be: phone, email, birthday, address.")
     print("Type 'done' to finish updating the contact.")
     print("Type 'show' to show current contact.")
 
-    # Словник дій для кожного поля
+    # functions to use inside record to manipulate data
     change_actions = {
         "phone": modify_phone,
         "email": modify_email,
@@ -122,38 +123,39 @@ def edit_contact(book: AddressBook) -> str:
         "address": modify_address
     }
 
-    # Основний цикл для додавання, зміни чи видалення даних
+    # make loop to ask fields input
     while True:
-        action = get_input("Choose an action (e.g., 'add phone', 'change address', 'done' to finish)").strip().lower()
+        action = get_input("Choose an action (e.g., 'add-phone', 'change-address', 'done' to finish)").strip().lower()
         
         if action == 'done':
             print("Finished updating contact")
+            exit_edit_mode()
             break
 
         if action == 'show':
             print(show_contact_table(record))
             continue
 
-        # Розділення команди на дії та поле
-        command_parts = action.split(maxsplit=1)
-        if len(command_parts) < 2:
-            print("Invalid format. Use 'add field', 'change field', or 'delete field'.")
+        # split command for action and field to manipulate
+        command_parts = action.split('-',maxsplit=1)
+        if len(command_parts) != 2:
+            print("Invalid format. Use 'add-field', 'change-field', or 'delete-field'.")
             continue
         
         command, field = command_parts
         if command in ["add", "change", "delete"] and field in change_actions:
-            # Виклик відповідної функції для обробки дій
+            # call nedded function
             change_actions[field](record, command)
         else:
-            print("Invalid option. Please choose a valid action in the format 'add field', 'change field', or 'delete field'.")
+            print("Invalid option. Please choose a valid action in the format 'add-field', 'change-field', or 'delete-field'.")
 
-    # Показ оновленого контакту
+    # Show updated contact
     print("\nUpdated contact information:")
     return show_contact_table(record)
 
 
 def modify_phone(record, action):
-"""modify_phone function."""
+    """phone data manipulation function"""
     if action == "add":
         new_phone = get_input("Enter new phone number: ")
         if record.find_phone(new_phone):
@@ -184,7 +186,7 @@ def modify_phone(record, action):
 
 
 def modify_email(record, action):
-"""modify_email function."""
+    """email data manipulation function"""
     if action == "add":
         if record.email:
             print(f"The email '{record.email.value}' already exists.")
@@ -210,7 +212,7 @@ def modify_email(record, action):
 
 
 def modify_birthday(record, action):
-"""modify_birthday function."""
+    """birthday data manipulation function"""
     if action == "add":
         if record.birthday:
             print(f"The birthday '{record.birthday.value.strftime('%d.%m.%Y')}' already exists.")
@@ -236,13 +238,13 @@ def modify_birthday(record, action):
 
 
 def modify_address(record, action):
-"""modify_address function."""
+    """addresses data manipulation function"""
     if action == "add":
         label = get_input("Enter address label (e.g., 'Home', 'Work')")
         if label in record.addresses:
             print(f"Address with label '{label}' already exists.")
         else:
-            address = get_input("Enter new address: ")
+            address = get_input("Enter new address")
             record.add_address(label, address)
             print("Address added successfully.")
     
@@ -266,40 +268,40 @@ def modify_address(record, action):
   
 @input_error
 def upcoming_birthdays(book: AddressBook) -> str:
-"""upcoming_birthdays function."""
+    """upcoming birthdays function."""
     period = int(get_input("Enter period in days  to show birthdays"))
     return book.show_upcoming_birthdays(period)
 
 
 @input_error
 def remove_contact(book: AddressBook) -> str:
-"""remove_contact function."""
+    """Remove contact function."""
     name = get_input("Enter name of contact")
     book.delete(name)
     return "Contact removed"
 
 @input_error
 def show_contact(book: AddressBook) -> str:
-"""show_contact function."""
+    """Show contact function."""
     name = get_input("Enter name of contact")
     record = get_contact_from_book(name, book)
     return show_contact_table(record) 
 
 @input_error
 def find_contact(address_book: AddressBook) -> None:
-"""find_contact function."""
+    """function to find data in record data"""
     query = input("Enter search query: ")
     results = address_book.find_by_query(query)
     print(show_search_results_table(results, query))
 
 
 def save_data(book, filename="addressbook.pkl"):
-"""save_data function."""
+    """save address book to file"""
     with open(filename, "wb") as f:
         pickle.dump(book, f)
 
 def load_data(filename="addressbook.pkl"):
-"""load_data function."""
+    """load address book from file"""
     try:
         with open(filename, "rb") as f:
             data = pickle.load(f)

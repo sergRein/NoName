@@ -3,17 +3,16 @@ import os
 from cryptography.fernet import Fernet
 
 class NotesManager:
-"""NotesManager class."""
+    """NotesManager class."""
+    
     def __init__(self):
-"""__init__ function."""
-"""__init__ method."""
+        """__init__ function."""
         self.notes = {}
         self.key = Fernet.generate_key()
         self.cipher_suite = Fernet(self.key)
 
     def add_note(self, title=None, content=None):
-"""add_note function."""
-"""add_note method."""
+        """add_note function."""
         title = title or input("Enter note title: ")
         content = content or input("Enter note content: ")
         if title in self.notes:
@@ -22,8 +21,7 @@ class NotesManager:
         return f"Note '{title}' added successfully."
 
     def edit_note(self, title=None):
-"""edit_note function."""
-"""edit_note method."""
+        """edit_note function."""
         title = title or input("Enter note title to edit: ")
         if title not in self.notes:
             return f"Note with title '{title}' does not exist."
@@ -32,8 +30,7 @@ class NotesManager:
         return f"Note '{title}' updated successfully."
 
     def delete_note(self, title=None):
-"""delete_note function."""
-"""delete_note method."""
+        """delete_note function."""
         title = title or input("Enter note title to delete: ")
         if title not in self.notes:
             return f"Note with title '{title}' does not exist."
@@ -44,8 +41,7 @@ class NotesManager:
         return "Deletion cancelled."
 
     def search_notes_by_keyword(self, keyword=None):
-"""search_notes_by_keyword function."""
-"""search_notes_by_keyword method."""
+        """search_notes_by_keyword function."""
         keyword = keyword or input("Enter keyword to search: ")
         results = {title: note for title, note in self.notes.items() if keyword in note["content"]}
         if results:
@@ -53,8 +49,7 @@ class NotesManager:
         return "No notes found with the given keyword."
 
     def add_tag(self, title=None, tag=None):
-"""add_tag function."""
-"""add_tag method."""
+        """add_tag function."""
         title = title or input("Enter note title to add a tag: ")
         if title not in self.notes:
             return f"Note with title '{title}' does not exist."
@@ -63,8 +58,7 @@ class NotesManager:
         return f"Tag '{tag}' added to note '{title}'."
 
     def search_notes_by_tag(self, tag=None):
-"""search_notes_by_tag function."""
-"""search_notes_by_tag method."""
+        """search_notes_by_tag function."""
         tag = tag or input("Enter tag to search: ")
         results = {title: note for title, note in self.notes.items() if tag in note["tags"]}
         if results:
@@ -72,8 +66,7 @@ class NotesManager:
         return f"No notes found with tag '{tag}'."
 
     def encrypt_note(self, title=None):
-"""encrypt_note function."""
-"""encrypt_note method."""
+        """encrypt_note function."""
         title = title or input("Enter note title to encrypt: ")
         if title not in self.notes:
             return f"Note with title '{title}' does not exist."
@@ -83,8 +76,7 @@ class NotesManager:
         return f"Note '{title}' encrypted successfully."
 
     def decrypt_note(self, title=None):
-"""decrypt_note function."""
-"""decrypt_note method."""
+        """decrypt_note function."""
         title = title or input("Enter note title to decrypt: ")
         if title not in self.notes:
             return f"Note with title '{title}' does not exist."
@@ -97,8 +89,7 @@ class NotesManager:
             return f"Failed to decrypt note '{title}': {str(e)}"
 
     def import_notes(self, file_path = None):
-"""import_notes function."""
-"""import_notes method."""
+        """import_notes function."""
         if not file_path:
             file_path = input("Enter file path to import notes from (JSON/CSV/TXT): ")
         if not os.path.exists(file_path):
@@ -114,8 +105,7 @@ class NotesManager:
             return f"Failed to import notes: {str(e)}"
 
     def export_notes(self, file_path = None):
-"""export_notes function."""
-"""export_notes method."""
+        """export_notes function."""
         if not file_path:
             file_path = input("Enter file path to export notes to (JSON/CSV/TXT): ")
         try:
@@ -128,8 +118,7 @@ class NotesManager:
             return f"Failed to export notes: {str(e)}"
 
     def save_notes(self):
-"""save_notes function."""
-"""save_notes method."""
+        """save_notes function."""
         try:
             with open("notes_backup.txt", "w") as file:
                 for title, note in self.notes.items():
@@ -139,12 +128,10 @@ class NotesManager:
             return f"Error saving notes: {str(e)}"
 
     def backup_notes(self):
-"""backup_notes function."""
-"""backup_notes method."""
+        """backup_notes function."""
         try:
             with open("notes_backup.bak", "w") as file:
                 json.dump(self.notes, file)
             return "Backup created successfully."
         except Exception as e:
             return f"Error creating backup: {str(e)}"
-        

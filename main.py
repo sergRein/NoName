@@ -1,13 +1,12 @@
 import readline
 from app.functions import add_contact, edit_contact, upcoming_birthdays, remove_contact, show_contact, save_data, load_data, find_contact
-from app.visualiser import show_menu, show_all_contacts, green_input, show_all_notes_table
+from app.visualiser import show_menu, show_all_contacts, green_input, show_all_notes_table, show_menu_notes
 from app.function_notes import NotesManager
 
 def parse_input(user_input: str) -> tuple[str, list[str]]:
-"""parse_input function."""
+    """parse_input function."""
     parts = user_input.split()  # split all input args
     cmd = parts[0].strip().lower() if parts else ""
-    #args = parts[1:] if len(parts) > 1 else []
     return cmd
 
 # Dictionary of commands and their functions
@@ -27,6 +26,8 @@ commands_book = {
 }
 
 commands_note = {
+    "notes-help": lambda: show_menu_notes(),
+    "notes-menu": lambda: show_menu_notes(),
     "note-add": lambda: notes_manager.add_note(),
     "note-edit": lambda: notes_manager.edit_note(),
     "note-delete": lambda: notes_manager.delete_note(),
@@ -42,34 +43,61 @@ commands_note = {
     "notes-all": lambda: show_all_notes_table(notes_manager),
 }
 
-# autocompleter
+
+#commands and elements for edit
+actions = ["add", "change", "delete"]
+elements = ["phone", "address", "email", "birthday"]
+# dict for all edit commands
+record_edit_commands = {f"{action}-{element}": None for action in actions for element in elements}
+record_edit_commands["done"] = None
+record_edit_commands["show"] = None
+
+current_commands = commands_book | commands_note
+
+def enter_edit_mode():
+    """Switch autocompleter to edit user commands"""
+    global current_commands
+    current_commands = record_edit_commands
+    init_completer()
+
+def exit_edit_mode():
+    """Switch autocompleter to main commands"""
+    global current_commands
+    current_commands = commands_book | commands_note
+    init_completer()
+
+
+
 def completer(text, state):
-"""completer function."""
-    options = [cmd for cmd in (commands_book | commands_note).keys() if cmd.startswith(text)]
+    """completer function. use tab for available commands"""
+    options = [cmd for cmd in (current_commands).keys() if cmd.startswith(text)]
     return options[state] if state < len(options) else None
 
+
 # readline use tab to complete command
-readline.parse_and_bind("tab: complete")
-readline.set_completer(completer)
+def init_completer():
+    readline.parse_and_bind("tab: complete")
+    readline.set_completer(completer)
+init_completer()
 
 def main(book) -> None:
-"""main function."""
+    """main function"""
     print("Welcome to the assistant bot!")
     show_menu()
     
     while True:
         user_input = green_input("Enter a command: ")
         command = parse_input(user_input)
-
         if command in ["close", "exit"]:
             print("Good bye!")
             break
-        elif command == "add":  # додано окрему перевірку для add_contact
+        elif command == "add":  # additional check for  add_contact
             result = add_contact(book)
             if result is not None:
                 print(result)
-        elif command == "edit":  # додано окрему перевірку для add_contact
-            result = edit_contact(book)
+        elif command == "edit":  # additional check for add_contact
+            enter_edit_mode()
+            result = edit_contact(book, exit_edit_mode)
             if result is not None:
                 print(result)
         elif command in commands_book:
