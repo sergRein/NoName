@@ -1,31 +1,65 @@
 import readline
-from app.functions import load_data, save_data
-from app.visualiser import show_menu
-from app.classes.address_book import AddressBook
-from app.classes.record import Record
-from app.localization import trans  # Імпортуємо функцію trans для перекладу
+from app.functions import *
+from app.visualiser import show_menu, show_all_contacts, green_input, show_contact
+from app.classes.localization import trans
 
-def get_input(prompt: str) -> str:
-    """Отримує ввід користувача для заданого запиту."""
-    return input(f"{prompt}: ").strip()
+def parse_input(user_input: str) -> tuple[str, list[str]]:
+    parts = user_input.split()  # split all input args
+    cmd = parts[0].strip().lower() if parts else ""
+    args = parts[1:] if len(parts) > 1 else []
+    return cmd, args
 
-def main():
-    book = load_data()
-    print(trans("hello"))
+# Словник команд та їх функцій
+commands = { 
+    "hello": lambda book: "How can I help you?",
+    "add": add_contact,
+    "change": change_contact,
+    "phone": show_phone,
+    "all": show_all_contacts,
+    "add-birthday": add_birthday,
+    "show-birthday": show_birthday,
+    "birthdays": upcoming_birthdays,
+    "close": lambda book: "Good bye!",
+    "exit": lambda book: "Good bye!",
+    "help": lambda book: show_menu(),
+    "menu": lambda book: show_menu(),
+    "add-email": add_email,
+    "add-address": add_address,
+    "remove-address": remove_address,
+    "remove-contact": remove_contact,
+    "show-contact": show_contact
+}
 
+# autocompeter
+def completer(text, state):
+    options = [cmd for cmd in commands.keys() if cmd.startswith(text)]
+    return options[state] if state < len(options) else None
+
+# readline use tab to complete command
+readline.parse_and_bind("tab: complete")
+readline.set_completer(completer)
+
+def main(book) -> None:
+    print("Welcome to the assistant bot!")
+    print(trans('hello_message'))
     show_menu()
     
     while True:
-        command = get_input(trans("Enter a command"))
-        
-        if command in ["close", "exit"]:
-            print(trans("goodbye"))
-            break
-        elif command in ["help", "menu"]:
-            show_menu()
-        elif command == "add":
-            print(add_contact(book))
-        else:
-            print(trans("Invalid command"))
+        user_input = green_input("Enter a command: ")
+        command, args = parse_input(user_input)
 
-    save_data(book)
+        if command in ["close", "exit"]:
+            print("Good bye!")
+            break
+
+        elif command in commands:
+            result = commands[command](book)
+            if result is not None:
+                print(result)
+        else:
+            print("Invalid command.")
+
+if __name__ == '__main__':
+    book = load_data()
+    main(book)
+    save_data(book) 

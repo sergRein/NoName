@@ -62,4 +62,4 @@ def main(book) -> None:
 if __name__ == '__main__':
     book = load_data()
     main(book)
-    save_data(book)
+    save_data(book) 
