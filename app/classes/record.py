@@ -5,6 +5,8 @@ from app.classes.basic_classes import Name, Phone, Birthday, Email, Address
 class Record:
     """Record Class responsible for phone, birthday, email, and address management."""
     def __init__(self, name: str):
+"""__init__ function."""
+"""__init__ method."""
         self.name = Name(name)
         self.phones = []
         self.birthday = None
@@ -71,6 +73,8 @@ class Record:
         return "\n".join(f"{label}: {address.address}" for label, address in self.addresses.items())
 
     def __str__(self):
+"""__str__ function."""
+"""__str__ method."""
         to_return = f"Контакт: {self.name.value}, телефони: {'; '.join(p.value for p in self.phones)}"
         if self.birthday:
             to_return += f", День народження: {self.birthday}"
