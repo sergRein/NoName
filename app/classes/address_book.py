@@ -9,9 +9,13 @@ class AddressBook(UserDict):
     """AddressBook class for all address book data"""
 
     def __init__(self):
+"""__init__ function."""
+"""__init__ method."""
         super().__init__()
 
     def __str__(self):
+"""__str__ function."""
+"""__str__ method."""
         if len(self.data) == 0:
             return "Записи відсутні"
         to_return = "Записи"
@@ -21,21 +25,29 @@ class AddressBook(UserDict):
     
 
     def add_record(self, record: Record) -> None:
+"""add_record function."""
+"""add_record method."""
         self.data[record.name.value] = record
 
 
     def find(self, name: str) -> str:
+"""find function."""
+"""find method."""
         if name in self.data:
             return self.data[name]
         
         return None
 
     def delete(self, name: str) -> None:
+"""delete function."""
+"""delete method."""
         if name not in self.data:
             raise KeyError(f"Record for name '{name}' not found")
         del self.data[name]
 
     def show_upcoming_birthdays(self, period = 7) -> str:
+"""show_upcoming_birthdays function."""
+"""show_upcoming_birthdays method."""
         today = datetime.today().date()
         congratulation_dict = defaultdict(list)
         date_start = today 
