@@ -60,7 +60,7 @@ pipboy-assistant
 Pip-Boy Assistant був розроблений командою No Idea Crew:
 - Максим - Scrum Master
 - Сергій - Технічний Лідер
-- Елеонора - Full-Stack Розробник
+- Елеонора - Розробник
 
 ## Ліцензія
 
