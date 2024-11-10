@@ -10,6 +10,7 @@ from app.visualiser import (
     show_menu_notes
 )
 from app.function_notes import NotesManager
+from app.classes.localization import trans
 
 
 def parse_input(user_input: str) -> tuple[str, list[str]]:
@@ -39,6 +40,7 @@ commands_note = {
     "notes-help": show_menu_notes,
     "notes-menu": show_menu_notes,
     "note-add": lambda: notes_manager.add_note(),
+    "note-show": lambda: notes_manager.show_note(),
     "note-edit": lambda: notes_manager.edit_note(),
     "note-delete": lambda: notes_manager.delete_note(),
     "note-search": lambda: notes_manager.search_notes_by_keyword(),
@@ -101,15 +103,15 @@ init_completer()
 
 def main(book) -> None:
     """Main function to handle user input and commands."""
-    print("Welcome to the assistant bot!")
+    print(trans("Welcome to the assistant bot!"))
     show_menu()
 
     while True:
-        user_input = green_input("Enter a command: ")
+        user_input = green_input("Enter a command")
         command = parse_input(user_input)
 
         if command in ["close", "exit"]:
-            print("Good bye!")
+            print(trans("Good bye!"))
             break
 
         if command == "add":
@@ -130,7 +132,7 @@ def main(book) -> None:
             if result is not None:
                 print(result)
         else:
-            print("Invalid command.")
+            print(trans("Invalid command."))
 
 
 if __name__ == '__main__':

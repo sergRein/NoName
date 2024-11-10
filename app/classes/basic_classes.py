@@ -26,7 +26,7 @@ class Phone(Field):
     @staticmethod
     def _is_valid_number(number: str) -> str:
         if len(number) != 10 or not number.isdigit():
-            raise ValueError("Невірний формат телефону. Має бути 10 цифр.")
+            raise ValueError("Wrong number format must be 10 digits")
         return number
 
     def update_number(self, new_value: str) -> None:
@@ -43,7 +43,7 @@ class Email(Field):
     def _is_valid_email(email: str) -> str:
         pattern = r'^[\w\.-]+@[\w\.-]+\.\w+$'
         if not re.match(pattern, email):
-            raise ValueError("Невірний формат електронної пошти.")
+            raise ValueError("Wrong email format")
         return email
 
 
@@ -58,7 +58,7 @@ class Birthday(Field):
         try:
             return datetime.strptime(birthday, "%d.%m.%Y").date()
         except ValueError as e:
-            raise ValueError("Невірний формат дати народження. Використовуйте формат DD.MM.YYYY.") from e
+            raise ValueError("Wrong birthday format. Please use DD.MM.YYYY.") from e
 
     def __str__(self):
         return f"{self.value.strftime('%d.%m.%Y')}"
