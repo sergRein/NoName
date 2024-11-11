@@ -12,6 +12,10 @@ from app.visualiser import (
 from app.function_notes import NotesManager
 from app.classes.localization import trans
 
+# init main classes
+notes_manager = NotesManager()
+book = load_data()
+
 
 def parse_input(user_input: str) -> tuple[str, list[str]]:
     """Parse user input into command and arguments."""
@@ -101,8 +105,11 @@ def init_completer():
 init_completer()
 
 
-def main(book) -> None:
+def main():
     """Main function to handle user input and commands."""
+    notes_manager.import_notes('notes.json')  # load notes
+    book = load_data()  # load address book data
+    
     print(trans("Welcome to the assistant bot!"))
     show_menu()
 
@@ -116,30 +123,36 @@ def main(book) -> None:
 
         if command == "add":
             result = add_contact(book)
-            if result is not None:
+            if result:
                 print(result)
         elif command == "edit":
             enter_edit_mode()
             result = edit_contact(book, exit_edit_mode)
-            if result is not None:
+            if result:
                 print(result)
         elif command in commands_book:
             result = commands_book[command](book)
-            if result is not None:
+            if result:
                 print(result)
         elif command in commands_note:
             result = commands_note[command]()
-            if result is not None:
+            if result:
                 print(result)
         else:
             print(trans("Invalid command."))
 
-
-if __name__ == '__main__':
-    notes_manager = NotesManager()
-    notes_manager.import_notes('notes.json')
-    book = load_data()
-    main(book)
     # Save our data
     save_data(book)
     notes_manager.export_notes('notes.json')
+
+
+
+if __name__ == '__main__':
+    #notes_manager = NotesManager()
+    #notes_manager.import_notes('notes.json')
+    #book = load_data()
+    #main(book)
+    ## Save our data
+    #save_data(book)
+    #notes_manager.export_notes('notes.json')
+    main()
