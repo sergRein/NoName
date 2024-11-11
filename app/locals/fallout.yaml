@@ -78,25 +78,25 @@
 "Tags": "Мітки (для впорядкування пустки)"
 "Good bye!": "До зустрічі! Будьте обережні на пустках!"
 "Notes imported successfully.": "Нотатки імпортовано! Додайте цінні знання до Pip-Boy!"
-"Enter note title": "Введіть назву нотатки (спробуй залишити щось цінне)",
-"Enter note content": "Введіть зміст нотатки (пильнуй, що пишеш)",
-"Note '{title}' added successfully.": "Нотатка '{title}' успішно додана. Розширюй знання!",
-"Enter note title to delete": "Введіть назву нотатки для видалення (деякі речі краще залишити)",
-"Are you sure you want to delete note '{title}'? (yes/no)": "Ви впевнені, що хочете видалити нотатку '{title}'? (так/ні)",
-"yes": "так",
-"Deletion cancelled.": "Видалення скасовано. Нехай спогади залишаться з вами!",
-"Notes exported successfully.": "Нотатки успішно експортовано! Вихід за межі сховища дозволено.",
-"Note '{title}' deleted successfully.": "Нотатка '{title}' успішно видалена. Пил йде в пил!",
-"Enter note title to add a tag": "Введіть назву нотатки для додавання мітки (щоб не загубитися)",
-"Enter tag to add": "Введіть мітку для додавання (означити важливе)",
-"Tag '{tag}' added to note '{title}'.": "Мітка '{tag}' додана до нотатки '{title}'! Місце позначене.",
-"Enter note title to encrypt": "Введіть назву нотатки для шифрування (секрети надійно приховані)",
-"Note '{title}' encrypted successfully.": "Нотатка '{title}' успішно зашифрована. Захищай свої таємниці!",
-"Enter note title to decrypt": "Введіть назву нотатки для розшифрування (секрети мають бути почуті)",
-"Note '{title}' decrypted successfully.": "Нотатка '{title}' успішно розшифрована! Секрети відкриті.",
-"Notes saved successfully.": "Нотатки успішно збережено – ще один день прожитий!",
-"Enter note title to edit": "Введіть назву нотатки для редагування (ніколи не пізно додати щось нове)",
-"Enter new content": "Введіть новий зміст (щоб залишити слід у пам'яті)",
+"Enter note title": "Введіть назву нотатки (спробуй залишити щось цінне)"
+"Enter note content": "Введіть зміст нотатки (пильнуй, що пишеш)"
+"Note '{title}' added successfully.": "Нотатка '{title}' успішно додана. Розширюй знання!"
+"Enter note title to delete": "Введіть назву нотатки для видалення (деякі речі краще залишити)"
+"Are you sure you want to delete note '{title}'? (yes/no)": "Ви впевнені, що хочете видалити нотатку '{title}'? (так/ні)"
+"yes": "так"
+"Deletion cancelled.": "Видалення скасовано. Нехай спогади залишаться з вами!"
+"Notes exported successfully.": "Нотатки успішно експортовано! Вихід за межі сховища дозволено."
+"Note '{title}' deleted successfully.": "Нотатка '{title}' успішно видалена. Пил йде в пил!"
+"Enter note title to add a tag": "Введіть назву нотатки для додавання мітки (щоб не загубитися)"
+"Enter tag to add": "Введіть мітку для додавання (означити важливе)"
+"Tag '{tag}' added to note '{title}'.": "Мітка '{tag}' додана до нотатки '{title}'! Місце позначене."
+"Enter note title to encrypt": "Введіть назву нотатки для шифрування (секрети надійно приховані)"
+"Note '{title}' encrypted successfully.": "Нотатка '{title}' успішно зашифрована. Захищай свої таємниці!"
+"Enter note title to decrypt": "Введіть назву нотатки для розшифрування (секрети мають бути почуті)"
+"Note '{title}' decrypted successfully.": "Нотатка '{title}' успішно розшифрована! Секрети відкриті."
+"Notes saved successfully.": "Нотатки успішно збережено – ще один день прожитий!"
+"Enter note title to edit": "Введіть назву нотатки для редагування (ніколи не пізно додати щось нове)"
+"Enter new content": "Введіть новий зміст (щоб залишити слід у пам'яті)"
 "Note '{title}' updated successfully.": "Нотатка '{title}' успішно оновлена! Запис свіжий, як світанок."
 "Backup created successfully.": "Резервну копію успішно створено. Vault-Tec пишається вами!"
 "Enter keyword to search": "Введіть ключове слово для пошуку (надіємось, знайдете рятівний рецепт)"
@@ -106,30 +106,25 @@
 "Found notes {notes}": "Знайдено нотатки {notes} – хапайте їх!"
 "Enter note title to show": "Введіть назву нотатки для перегляду"
 "Found notes with tag '{tag}' - {notes}": "Знайдено нотатки з міткою '{tag}' - {notes}"
-Enter period in days to show birthdays: Enter period in days to show birthdays
-Name_short: "Ім`я"
-Phones_short: Телефони
-Email_short: Email
-Adresses_short: Адреси
-Birthday_short: День народження
+"Enter period in days to show birthdays": "Введіть період у днях для відображення днів народження"
+"Name_short": "Ім`я"
+"Phones_short": "Телефони"
+"Email_short": "Email"
+"Adresses_short": "Адреси"
+"Birthday_short": "День народження"
 "Wrong number format must be 10 digits": "Неправильний формат номера! Спробуйте 10 цифр, щоб Pip-Boy не сварився."
 "Wrong email format": "Невірний формат електронної пошти! А може, краще голуба відправити?"
 "Wrong birthday format. Please use DD.MM.YYYY.": "Неправильний формат дати народження. Введіть як ДД.ММ.РРРР, щоб не плутатися з гулем."
-"Type 'done' to finish updating the contact.": "Введіть 'done', щоб завершити – Vault-Tec схвалює такі дії!"
-"Type 'show' to show current contact.": "Введіть 'show', щоб побачити поточного вижившого."
 "Invalid format. Use 'add-field', 'change-field', or 'delete-field'.": "Неправильний формат. Використовуйте 'add-field', 'change-field' або 'delete-field'. Навіть гулі так можуть!"
-Type "done" to finish updating the contact.: "Ну що ж, Відвідувачу Сховища! Напишіть 'done', щоб завершити оновлення контакту."
-Type "show" to show current contact.: "Цікавитесь? Напишіть 'show', щоб зазирнути в дані поточного контакту."
-Invalid option. Please choose a valid action in the format 'add-field', 'change-field', or 'delete-field'.: "Неправильний вибір, Мешканцю Пустки! Скористайтеся форматом 'add-field', 'change-field' або 'delete-field'."
-The phone number '{old_phone}' does not exist.: "Номер телефону '{old_phone}' загублений, наче радтарган у пустці. Його не існує."
-Enter new email: "Введіть нову електронну адресу, щоб зберегти життя в контактах."
-Email cannot be empty. Please enter a valid email.: "Порожня електронна адреса — як порожня пляшка Нюка-Коли — марна річ! Введіть дійсну адресу."
-Email added successfully.: "Електронну адресу збережено! Ще одна перемога для Посібника з виживання в Пустці."
-The email '{email}' already exists.: "Електронна адреса '{email}' вже є у вашому Сховищі."
-No address with label '{label}' exists.: "Адресу з позначкою '{label}' не знайдено. Чи не забрали її Брати зі Сталі?"
-The birthday '{birthday}' already exists.: "День народження '{birthday}' вже зафіксовано в літописах Сховища."
-Invalid command.: Недійсна команда, мандрівнику.
-Show note: Показати нотатку: Загадковий записок знайдений.
-File does not exist.: Файл? Ха, він існував лише в твоїй уяві.
-Enter new birthday (DD.MM.YYYY): Введіть нову дату народження (ДД.ММ.РРРР). Це не омолодить персонажа, але спробуй.
-Birthday added successfully.: День народження додано. Святкуй, якщо знайдеш кого запросити.
+"The phone number '{old_phone}' does not exist.": "Номер телефону '{old_phone}' загублений, наче радтарган у пустці. Його не існує."
+"Enter new email": "Введіть нову електронну адресу, щоб зберегти життя в контактах."
+"Email cannot be empty. Please enter a valid email.": "Порожня електронна адреса — як порожня пляшка Нюка-Коли — марна річ! Введіть дійсну адресу."
+"Email added successfully.": "Електронну адресу збережено! Ще одна перемога для Посібника з виживання в Пустці."
+"The email '{email}' already exists.": "Електронна адреса '{email}' вже є у вашому Сховищі."
+"No address with label '{label}' exists.": "Адресу з позначкою '{label}' не знайдено. Чи не забрали її Брати зі Сталі?"
+"The birthday '{birthday}' already exists.": "День народження '{birthday}' вже зафіксовано в літописах Сховища."
+"Invalid command.": "Недійсна команда, мандрівнику."
+"Show note": "Показати нотатку: Загадковий записок знайдений."
+"File does not exist.": "Файл? Ха, він існував лише в твоїй уяві."
+"Enter new birthday (DD.MM.YYYY)": "Введіть нову дату народження (ДД.ММ.РРРР). Це не омолодить персонажа, але спробуй."
+"Birthday added successfully.": "День народження додано. Святкуй, якщо знайдеш кого запросити."

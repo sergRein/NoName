@@ -2,5 +2,4 @@
 app/__pycache__/
 app/classes/__pycache__/
 *.bak
-*.json
 *.pkl
